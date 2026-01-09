@@ -1,74 +1,107 @@
 <!-- HTML !-->
-<!-- <button class="button-85" role="button">Button 85</button> -->
+<!-- 
 <p style="font-size:24px; text-align:center; margin-top:20%;">
 ❤️Website under construction. Please check back later!❤️ <br>
 ❤️网站正在建设中，请稍后再来！❤️
+</p>
+<button class="button-85" role="button">Button 85</button>
 
 <style>
-.button-85 {
-  padding: 0.6em 2em;
-  border: none;
-  outline: none;
-  color: rgb(255, 255, 255);
-  background: #111;
-  cursor: pointer;
-  position: relative;
-  z-index: 0;
-  border-radius: 10px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
 
-.button-85:before {
-  content: "";
-  background: linear-gradient(
-    45deg,
-    #ff0000,
-    #ff7300,
-    #fffb00,
-    #48ff00,
-    #00ffd5,
-    #002bff,
-    #7a00ff,
-    #ff00c8,
-    #ff0000
-  );
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  background-size: 400%;
-  z-index: -1;
-  filter: blur(5px);
-  -webkit-filter: blur(5px);
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  animation: glowing-button-85 20s linear infinite;
-  transition: opacity 0.3s ease-in-out;
-  border-radius: 10px;
-}
+</style> -->
 
-@keyframes glowing-button-85 {
-  0% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: 400% 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For You 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@200..900&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+</head>
 
-.button-85:after {
-  z-index: -1;
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #222;
-  left: 0;
-  top: 0;
-  border-radius: 10px;
-}
-</style>
+
+
+<body>
+
+  <main class="container basic" id="main-container">
+    <h1>🦋 Mizu 🌸</h1>
+    <div class="difficulty-bar">
+        <button class="button-85" id="diff-down">−</button>
+        <div class="difficulty-label" id="diff-label">BASIC</div>
+        <button class="button-85" id="diff-up">+</button>
+    </div>
+    <p class="subtitle">Choose a song</p>
+
+    <div class="carousel">
+        <a href="https://swizzx.github.io/只/为了/我一生挚爱的/mizu" class="jacket">
+            <div class="cover"><img src="images/christmas.jpeg" alt="圣诞节"></div>
+            <div class="title">EXTRA TRACK</div>
+            <div class="name">圣诞节信（久）</div>
+        </a>
+
+        <!-- <a href="letters/track1.html" class="jacket"> -->
+        <a class="jacket">
+        <!-- <div class="cover">💕</div> -->
+        <div class="cover">🚧</div>
+        <div class="title">Under Construction 🚧</div>
+        <div class="name"> 被修理中 🚧</div>
+        </a>
+
+        <!-- <a href="letters/track2.html" class="jacket"> -->
+        <a class="jacket">
+        <!-- <div class="cover">🌷</div> -->
+        <div class="cover">🚧</div>
+        <div class="title">Under Construction 🚧</div>
+        <div class="name"> 被修理中 🚧</div>
+        </a>
+
+        <!-- <a href="letters/track3.html" class="jacket"> -->
+        <a class="jacket">
+        <!-- <div class="cover">📸</div> -->
+        <div class="cover">🚧</div>
+        <div class="title">Under Construction 🚧</div>
+        <div class="name"> 被修理中 🚧</div>
+        </a>
+
+        <!-- <a href="letters/final.html" class="jacket final"> -->
+        <a class="jacket">
+        <!-- <div class="cover">💖</div> -->
+        <div class="cover">🚧</div>
+        <div class="title">Under Construction 🚧</div>
+        <div class="name"> 被修理中 🚧</div>
+        </a>
+    </div>
+
+    <p class="footer">Insert heart to start 💖</p>
+  </main>
+
+</body>
+
+<script>
+  const difficulties = ["basic", "advanced", "expert", "master", "remaster"];
+  const labels = ["BASIC", "ADVANCED", "EXPERT", "MASTER", "Re:MASTER"];
+
+  let current = 0;
+
+  const container = document.getElementById("main-container");
+  const label = document.getElementById("diff-label");
+
+  function updateDifficulty() {
+    container.className = "container " + difficulties[current];
+    label.textContent = labels[current];
+  }
+
+  document.getElementById("diff-up").onclick = () => {
+    current = (current + 1) % difficulties.length;
+    updateDifficulty();
+  };
+
+  document.getElementById("diff-down").onclick = () => {
+    current = (current - 1 + difficulties.length) % difficulties.length;
+    updateDifficulty();
+  };
+</script>
+
+
+</html>
