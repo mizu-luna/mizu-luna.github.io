@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>𓌉◯𓇋⊹₊⟡⋆ Omnomnomnom</title>
+  <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://kit.fontawesome.com/b20253bfc0.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<main class="container remaster">
+
+  <h1>🍴食物 & 甜品🍦</h1>
+  <p class="subtitle">一起吃过的好料！！！</p>
+
+  <div class="jacket-grid">
+    <div class="jacket" onclick="openImage('5-10-25.jpeg')">
+      <div class="cover"><img src="../images/5-10-25.jpeg"></div>
+        <div class="name">10月5日 </div><div class="title">晚餐</div>
+    </div>
+    <div class="jacket" onclick="openImage('20-10-25.jpeg')">
+      <div class="cover"><img src="../images/20-10-25.jpeg"></div>
+        <div class="name">10月20日 </div><div class="title">甜品</div>
+    </div>
+    <div class="jacket" onclick="openImage('12-12-25.jpeg')">
+      <div class="cover"><img src="../images/12-12-25.jpeg"></div>
+        <div class="name">12月12日 </div><div class="title">宵夜</div>
+    </div>
+    <!-- <div class="jacket" onclick="openImage('12-12-25[2].mp4')">
+      <div class="cover"><img src="../images/12-12-25[2].mp4"></div>
+        <div class="name">12月12日 </div><div class="title">宵夜</div>
+    </div> -->
+    <div class="jacket" onclick="openImage('19-12-25[1].jpeg')">
+      <div class="cover"><img src="../images/19-12-25[1].jpeg"></div>
+        <div class="name">12月19日 </div><div class="title">晚餐</div>
+    </div>
+    <div class="jacket" onclick="openImage('19-12-25[2].jpeg')">
+      <div class="cover"><img src="../images/19-12-25[2].jpeg"></div>
+        <div class="name">12月19日 </div><div class="title">宵夜</div>
+    </div>
+    <div class="jacket" onclick="openImage('27-12-25.jpeg')">
+      <div class="cover"><img src="../images/27-12-25.jpeg"></div>
+        <div class="name">12月27日 </div><div class="title">晚餐</div>
+    </div>
+    <div class="jacket" onclick="openImage('6-1-26.jpeg')">
+      <div class="cover"><img src="../images/6-1-26.jpeg"></div>
+        <div class="name">1月6日 </div><div class="title">宵夜</div>
+    </div>
+    <!-- Add more as needed -->
+  </div>
+
+  <p class="subtitle" style="color:#ff5fa2">此章节需要扩充。需要你的幫助擴展它(｡•̀ᴗ-)✧</p>
+
+<div class="lightbox" id="lightbox" onclick="closeImage()">
+  <img id="lightbox-img">
+</div>
+
+<a href="../index.html" class="home-button" title="Back to Home">
+  <i class="fa fa-home" aria-hidden="true"></i>
+</a>
+
+<script>
+function openImage(src) {
+  document.getElementById("lightbox-img").src = "../images/" + src;
+  document.getElementById("lightbox").style.display = "flex";
+}
+
+function closeImage() {
+  document.getElementById("lightbox").style.display = "none";
+}
+</script>
+
+</body>
+</html>

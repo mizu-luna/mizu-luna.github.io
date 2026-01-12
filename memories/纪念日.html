@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ᯓ★๋࣭⏱ ⭑ 纪念日</title>
+  <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://kit.fontawesome.com/b20253bfc0.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<a href="../index.html" class="home-button" title="Back to Home">
+  <i class="fa fa-home" aria-hidden="true"></i>
+</a>
+
+<main class="container">
+
+  <h1>📅 纪念日 ⏳</h1>
+  <p class="subtitle">我们甜甜的回忆˚ʚ♡ɞ˚</p>
+
+    <div class="timeline">
+
+        <div class="event left">
+            <div class="dot"></div>
+            <div class="card" onclick="openEvent(0)">
+            <!-- <div class="date">2024-03-12</div> -->
+            <div class="date">Under Construction 1🚧</div>
+            <div class="summary"> 被修理中 1🚧</div>
+            <!-- <div class="summary">The day we first talked.</div> -->
+            </div>
+        </div>
+
+        <div class="event right">
+            <div class="dot"></div>
+            <div class="card" onclick="openEvent(1)">
+            <!-- <div class="date">2024-04-05</div> -->
+            <div class="date">Under Construction 2🚧</div>
+            <div class="summary"> 被修理中 2🚧</div>
+            <!-- <div class="summary">That late night we couldn’t stop laughing.</div> -->
+            </div>
+        </div>
+
+        <!-- <div class="event left">
+            <div class="dot"></div>
+            <div class="card" onclick="openEvent(2)">
+            <div class="date">2024-05-20</div>
+            <div class="summary">When I started looking forward to your messages.</div>
+            </div>
+        </div>
+
+        <div class="event left">
+            <div class="dot"></div>
+            <div class="card" onclick="openEvent(0)">
+            <div class="date">2024-03-12</div>
+            <div class="summary">The day we first talked.</div>
+            </div>
+        </div>
+
+        <div class="event right">
+            <div class="dot"></div>
+            <div class="card" onclick="openEvent(1)">
+            <div class="date">2024-04-05</div>
+            <div class="summary">That late night we couldn’t stop laughing.</div>
+            </div>
+        </div>
+
+        <div class="event left">
+            <div class="dot"></div>
+            <div class="card" onclick="openEvent(2)">
+            <div class="date">2024-05-20</div>
+            <div class="summary">When I started looking forward to your messages.</div>
+            </div>
+        </div> -->
+
+        </div>
+
+
+
+</main>
+
+<!-- Fullscreen memory view -->
+<div class="event-overlay" id="overlay" onclick="closeEvent()">
+  <div class="event-detail" onclick="event.stopPropagation()">
+    <div class="detail-date" id="detail-date"></div>
+    <div class="detail-text" id="detail-text"></div>
+  </div>
+</div>
+
+<script>
+const events = [
+{
+    date: "Under Construction 1🚧",
+    text: "被修理中 1🚧"
+  },
+  {
+    date: "Under Construction 2🚧",
+    text: "被修理中 2🚧"
+  },
+  {
+    date: "2024-03-12",
+    text: "This was the first time we talked. I didn’t know it then, but it ended up being the start of something that slowly became really important to me."
+  },
+  {
+    date: "2024-04-05",
+    text: "We stayed up late laughing about nothing. That was when I realized how easy it felt to talk to you, like time just disappeared."
+  },
+  {
+    date: "2024-05-20",
+    text: "Somewhere around here, I noticed I was waiting for your messages. Not because I was bored — but because I wanted to hear from you."
+  }
+];
+
+function openEvent(index) {
+  document.getElementById("detail-date").textContent = events[index].date;
+  document.getElementById("detail-text").textContent = events[index].text;
+  document.getElementById("overlay").style.display = "flex";
+}
+
+function closeEvent() {
+  document.getElementById("overlay").style.display = "none";
+}
+</script>
+
+</body>
+</html>
