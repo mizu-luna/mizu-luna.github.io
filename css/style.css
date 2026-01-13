@@ -124,6 +124,11 @@ h1 {
   color: #ff5fa2;
   margin-bottom: 10px;
   font-size: clamp(1.8rem, 5vw, 2.5rem);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
 }
 
 .subtitle {
@@ -168,13 +173,57 @@ h1 {
   box-sizing: border-box;
 }
 
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+}
+
 .carousel {
   display: flex;
   gap: 20px;
   overflow-x: auto;
-  padding: 20px 10px;
-  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 30px 60px; /* space so cards don’t hide under buttons */
 }
+
+/* Hide scrollbar */
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Floating buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  background: white;
+  border: none;
+  font-size: 1.6rem;
+  padding: 10px 16px;
+  border-radius: 50%;
+  box-shadow: 0 6px 0 #ffb3d9;
+  cursor: pointer;
+  color: #ff5fa2;
+  opacity: 0.95;
+}
+
+.carousel-btn.left {
+  left: 10px;
+}
+
+.carousel-btn.right {
+  right: 10px;
+}
+
+.carousel-btn:active {
+  transform: translateY(-50%) translateY(3px);
+  box-shadow: 0 3px 0 #ffb3d9;
+}
+
 
 .jacket {
   flex: 0 0 160px;
@@ -262,6 +311,11 @@ h1 {
   border-radius: 20px;
   background: white;
   letter-spacing: 1px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
 }
 
 

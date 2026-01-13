@@ -33,45 +33,51 @@
         <button class="button-85" id="diff-up">+</button>
     </div>
     <p class="subtitle">Choose a song</p>
+    <div class="carousel-wrapper">
 
-    <div class="carousel">
+      <button class="carousel-btn left" onclick="scrollCarousel(-1)">◀</button>
 
+      <div class="carousel" id="carousel">
 
-        <a href="memories/食物和甜品.html" class="jacket">
-        <!-- <div class="cover">💕</div> -->
-        <div class="cover">🍴</div>
-        <div class="title">回忆</div>
-        <div class="name">食物和甜品</div>
-        </a>
+          <a href="memories/食物和甜品.html" class="jacket">
+          <!-- <div class="cover">💕</div> -->
+          <div class="cover">🍴</div>
+          <div class="title">回忆</div>
+          <div class="name">食物和甜品</div>
+          </a>
 
-        <a href="memories/纪念日.html" class="jacket">
-        <!-- <div class="cover">🌷</div> -->
-        <div class="cover">🚧</div>
-        <div class="title">回忆</div>
-        <div class="name">纪念日</div>
-        </a>
+          <a href="memories/纪念日.html" class="jacket">
+          <!-- <div class="cover">🌷</div> -->
+          <div class="cover">🚧</div>
+          <div class="title">回忆</div>
+          <div class="name">纪念日</div>
+          </a>
 
-        <a href="https://swizzx.github.io/只/为了/我一生挚爱的/mizu" class="jacket">
-            <div class="cover"><img src="images/christmas.jpeg" alt="圣诞节"></div>
-            <div class="title">EXTRA TRACK</div>
-            <div class="name">圣诞节信（久）</div>
-        </a>
+          <a href="https://swizzx.github.io/只/为了/我一生挚爱的/mizu" class="jacket">
+              <div class="cover"><img src="images/christmas.jpeg" alt="圣诞节"></div>
+              <div class="title">EXTRA TRACK</div>
+              <div class="name">圣诞节信（久）</div>
+          </a>
 
-        <!-- <a href="letters/track3.html" class="jacket"> -->
-        <a class="jacket">
-        <!-- <div class="cover">📸</div> -->
-        <div class="cover">🚧</div>
-        <div class="title">Under Construction 🚧</div>
-        <div class="name"> 被修理中 🚧</div>
-        </a>
+          <!-- <a href="letters/track3.html" class="jacket"> -->
+          <a class="jacket">
+          <!-- <div class="cover">📸</div> -->
+          <div class="cover">🚧</div>
+          <div class="title">Under Construction 🚧</div>
+          <div class="name"> 被修理中 🚧</div>
+          </a>
 
-        <!-- <a href="letters/final.html" class="jacket final"> -->
-        <a class="jacket">
-        <!-- <div class="cover">💖</div> -->
-        <div class="cover">🚧</div>
-        <div class="title">Under Construction 🚧</div>
-        <div class="name"> 被修理中 🚧</div>
-        </a>
+          <!-- <a href="letters/final.html" class="jacket final"> -->
+          <a class="jacket">
+          <!-- <div class="cover">💖</div> -->
+          <div class="cover">🚧</div>
+          <div class="title">Under Construction 🚧</div>
+          <div class="name"> 被修理中 🚧</div>
+          </a>
+      </div>
+
+      <button class="carousel-btn right" onclick="scrollCarousel(1)">▶</button>
+
     </div>
 
     <p class="footer">0/1 credit(s) 💖<br>
@@ -104,6 +110,17 @@
     current = (current - 1 + difficulties.length) % difficulties.length;
     updateDifficulty();
   };
+
+  function scrollCarousel(direction) {
+    const carousel = document.getElementById("carousel");
+    if (!carousel) return;
+
+    const scrollAmount = carousel.clientWidth * 0.65;
+    carousel.scrollBy({
+      left: scrollAmount * direction,
+      behavior: "smooth"
+    });
+  }
 </script>
 
 
