@@ -153,7 +153,7 @@
 
         <div class="event left">
             <div class="dot"></div>
-            <div class="card" onclick="openEvent(16)">
+            <div class="card" onclick="openEvent(-1)">
                 <div class="date">2026 年 1 月 13 日</div>
                 <div class="summary">知道了亲你脸的害羞</div>
             </div>
@@ -161,7 +161,7 @@
 
         <div class="event right">
             <div class="dot"></div>
-            <div class="card" onclick="openEvent(16)">
+            <div class="card" onclick="openEvent(-1)">
                 <div class="date">2026 年 1 月 16 日</div>
                 <div class="summary">第一次谈到关系精神科药事</div>
             </div>
@@ -169,7 +169,9 @@
 
         <div class="event left special-event">
             <div class="dot"></div>
-            <div class="card" style="background: deeppink;" onclick="openEvent(16)">
+            <div class="card" style="background: deeppink;" onclick="openEvent(-1)">
+                <span class="heart" style="top:-10px; right:10px;">❤</span> <!-- height decorations-->
+                <span class="heart" style="bottom:-10px; left:15px;">❤</span> <!-- height decorations-->
                 <div class="date" style=" color: rgb(255, 255, 255);">2026 年 1 月 20 日</div>
                 <div class="summary" style=" color: rgb(250, 227, 227);">我们第一次亲嘴 (,,>﹏<,,)</div>
             </div>
@@ -177,7 +179,7 @@
 
         <div class="event right">
             <div class="dot"></div>
-            <div class="card" onclick="openEvent(16)">
+            <div class="card" onclick="openEvent(-1)">
                 <div class="date">2026 年 1 月 23 日</div>
                 <div class="summary">第一次看到你穿jirai和你叫了我宝宝</div>
             </div>
@@ -185,23 +187,25 @@
 
         <div class="event left">
             <div class="dot"></div>
-            <div class="card" onclick="openEvent(16)">
+            <div class="card" onclick="openEvent(-1)">
                 <div class="date">2026 年 2 月 10 日</div>
                 <div class="summary">认真的问你愿意当我情人节对象</div>
             </div>
         </div>
 
-        <div class="event right">
+        <div class="event right special-event">
             <div class="dot"></div>
-            <div class="card" onclick="openEvent(16)">
-                <div class="date">2026 年 2 月 12 日</div>
-                <div class="summary">请了MC，陪你染头发，你跟我讲真的准备好了，愿意和我在一起</div>
+            <div class="card" style="background: deeppink;" onclick="openEvent(-1)">
+                <span class="heart" style="top:-10px; right:10px;">❤</span> <!-- height decorations-->
+                <span class="heart" style="bottom:-10px; left:15px;">❤</span> <!-- height decorations-->
+                <div class="date" style=" color: rgb(255, 255, 255);">2026 年 2 月 12 日</div>
+                <div class="summary" style=" color: rgb(250, 227, 227);">请了MC，陪你染头发，你跟我讲真的准备好了，愿意和我在一起</div>
             </div>
         </div>
 
         <div class="event left">
             <div class="dot"></div>
-            <div class="card" onclick="openEvent(16)">
+            <div class="card" onclick="openEvent(-1)">
                 <div class="date">2026 年 2 月 24 日</div>
                 <div class="summary">日本回来后第一次见面，送你纪念品，带你到你家靠近的公园看风景</div>
             </div>
@@ -209,7 +213,7 @@
 
         <div class="event right">
             <div class="dot"></div>
-            <div class="card" onclick="openEvent(16)">
+            <div class="card" onclick="openEvent(-1)">
                 <div class="date">2026 年 2 月 28 日</div>
                 <div class="summary">一起去甜点自助，买了配着的戒指，来我家一起睡着了</div>
             </div>
@@ -231,15 +235,6 @@
 
 <script>
 const events = [
-    // {
-    
-    //     date: "Under Construction 1🚧",
-    //     text: "被修理中 1🚧"
-    // },
-    // {
-    //     date: "Under Construction 2🚧",
-    //     text: "被修理中 2🚧"
-    // },
     {
         date: "2025 年 8 月 5 日",
         text: "一天刚忙完的星期二，吃了晚餐上来，看见到一位女神，眼睛好漂亮，穿着口罩，手套上有粘着翅膀刀片，好像有印象不懂哪里遇过你，虽然心情不好但还是鼓起勇气约你一起打一两场maimai。\n回头看现在，我真的每天都在感谢老天当时让我鼓起勇气，要不然，我就不会遇见你了。",
@@ -286,7 +281,7 @@ const events = [
     },
     {
         date: "2025 年 12 月 12 日",
-        text: "庆祝我生日，第一次我们牵手，第一次你喂我吃甜品"
+        text: "迟到了你家，我们快快的赶去庆祝我生日，第一次我们牵手，第一次你喂我吃甜品"
     },
     {
         date: "2025 年 12 月 18 日",
@@ -303,10 +298,17 @@ const events = [
     {
         date: "2026 年 1 月 6 日",
         text: "新年第一次约了我出去"
+    },
+    {
+        date: "Under Construction 🚧",
+        text: "被修理中 🚧"
     }
 ];
 
 function openEvent(index) {
+  if (index === -1) {
+    index = events.length - 1; // Show the last event for under construction cards
+  }
   document.getElementById("detail-date").textContent = events[index].date;
   document.getElementById("detail-text").innerHTML = events[index].text.replace(/\n/g, "<br>");
   document.getElementById("overlay").style.display = "flex";
