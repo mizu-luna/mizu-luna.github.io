@@ -398,14 +398,46 @@ h1 {
   text-align: center;
 }
 
+.detail-content {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 15px;
+}
+
+/* Image */
+.detail-image {
+  flex: 1;
+  display: none; /* hidden by default */
+}
+
+.detail-image img {
+  width: 100%;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+/* Text */
+.detail-text {
+  flex: 1;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 600px) {
+  .detail-content {
+    flex-direction: column;
+  }
+
+  .detail-image {
+    width: 100%;
+  }
+}
+
 .detail-date {
   color: #888;
   margin-bottom: 15px;
-}
-
-.detail-text {
-  font-size: 1.2rem;
-  line-height: 1.6;
 }
 
 /* Each event */

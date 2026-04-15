@@ -261,6 +261,16 @@
             </div>
         </div>
 
+        <div class="event right special-event">
+            <div class="dot"></div>
+            <div class="card" style="background: deeppink" onclick="openEvent(-1)">
+                <span class="heart" style="top:-10px; right:10px;">❤</span> <!-- height decorations-->
+                <span class="heart" style="bottom:-10px; left:15px;">❤</span> <!-- height decorations-->
+                <div class="date">2026 年 4 月 4 日</div>
+                <div class="summary">陪我看心理医生后，买了kiko，后去巴生吃雪媚娘</div>
+            </div>
+        </div>
+
         </div>
 
 
@@ -270,8 +280,17 @@
 <!-- Fullscreen memory view -->
 <div class="event-overlay" id="overlay" onclick="closeEvent()">
   <div class="event-detail" onclick="event.stopPropagation()">
+
     <div class="detail-date" id="detail-date"></div>
-    <div class="detail-text" id="detail-text"></div>
+
+    <div class="detail-content">
+      <div class="detail-image" id="detail-image-container">
+        <img id="detail-image">
+      </div>
+
+      <div class="detail-text" id="detail-text"></div>
+    </div>
+
   </div>
 </div>
 
@@ -342,17 +361,84 @@ const events = [
         text: "新年第一次约了我出去"
     },
     {
+        date:"2026 年 1 月 13 日",
+        text:"知道了亲你脸的害羞"
+    },
+    {
+        date:"2026 年 1 月 16 日",
+        text:"第一次谈到关系精神科药事"
+    },
+    {
+        date:"2026 年 1 月 20 日",
+        text:"我们第一次亲嘴 (,,>﹏<,,)"
+    },
+
+    {
+        date:"2026 年 1 月 23 日",
+        text:"第一次看到你穿jirai和你叫了我宝宝"
+    },
+    {
+        date:"2026 年 2 月 10 日",
+        text:"认真的问你愿意当我情人节对象"
+    },
+    {
+        date:"2026 年 2 月 12 日",
+        text:"请了MC，陪你染头发，你跟我讲真的准备好了，愿意和我在一起"
+    },
+    {
+        date:"2026 年 2 月 24 日",
+        text:"日本回来后第一次见面，送你纪念品，带你到你家靠近的公园看风景"
+    },
+    {
+        date:"2026 年 2 月 28 日",
+        text:"一起去甜点自助，买了配着的戒指，来我家一起睡着了"
+    },
+    {
+        date:"2026 年 3 月 6 日",
+        text:"唱K，去RYOURI吃了被你爸爸的朋友发现了"
+    },
+    {
+        date:"2026 年 3 月 13 日",
+        text:"第一次穿了“老婆衣”拍了镜子照，第一次叫我老公"
+    },
+    {
+        date:"2026 年 3 月 14 日",
+        text:"宝宝陪我去看心理医生，去了我家抱抱聊聊，吃了火锅后出口8"
+    },
+    {
+        date:"2026 年<br>3 月<br>15 日",
+        text:"💍"
+    },
+    {
+        date:"2026 年 3 月 24 日",
+        text:"刷着一整晚的14，吃宵夜时看照片讲着回忆"
+    },
+    {
+        date:"2026 年 4 月 4 日",
+        text:"陪我看心理医生后，买了kiko，后去巴生吃雪媚娘"
+    },
+    {
         date: "Under Construction 🚧",
         text: "被修理中 🚧"
     }
 ];
 
 function openEvent(index) {
-  if (index === -1) {
-    index = events.length - 1; // Show the last event for under construction cards
+  const event = events[index];
+
+  document.getElementById("detail-date").textContent = event.date;
+  document.getElementById("detail-text").textContent = event.text;
+
+  const img = document.getElementById("detail-image");
+  const container = document.getElementById("detail-image-container");
+
+  if (event.image) {
+    img.src = "../images/gallery/" + event.image;
+    container.style.display = "block";
+  } else {
+    container.style.display = "none";
   }
-  document.getElementById("detail-date").textContent = events[index].date;
-  document.getElementById("detail-text").innerHTML = events[index].text.replace(/\n/g, "<br>");
+
   document.getElementById("overlay").style.display = "flex";
 }
 
