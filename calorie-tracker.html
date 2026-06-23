@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Health Tracker</title>
+<title>卡路里追踪器</title>
 
 <style>
     body {
@@ -161,7 +161,10 @@
 
 <div class="summary">
     日期: <span id="date"></span><br>
-    卡路里: <span id="total">0</span> kcal
+    热量摄入: <span id="intake-total">0</span> kcal<br>
+    热量消耗: <span id="activity-total">0</span> kcal<br>
+    净热量: <span id="net-total">0</span> kcal<br>
+    体重: <span id="weightDisplay">-</span>
 </div>
 
 <!-- HOME -->
@@ -175,7 +178,7 @@
     </div>
 
     <div class="card">
-        <h3>Quick Add</h3>
+        <h3>总结</h3>
 
         <!-- <div class="quick">
             <button onclick="quick('breakfast','Banana',105)">Banana</button>
@@ -208,13 +211,35 @@
 
         <div class="quick">
             <button onclick="quick_from_meal('Banana',105)">香蕉</button>
-            <button onclick="quick_from_meal('Eggs',180)">鸡蛋</button>
-            <button onclick="quick_from_meal('Chicken Rice',650)">鸡肉饭</button>
-            <button onclick="quick_from_meal('Rice + Chicken',700)">米饭 + 鸡肉</button>
+            <button onclick="quick_from_meal('teriyaki Chicken 饭团',179)">Teriyaki Chicken 饭团</button>
+            <button onclick="quick_from_meal('kani mayo 三明治',249)">Kani Mayo 三明治</button>
+            <button onclick="quick_from_meal('chicken caesar wrap',264)">Chicken Caesar Wrap</button>
         </div>
 
         <ul id="list"></ul>
     </div>
+
+</div>
+
+<!-- CALORIES BURNT -->
+<div id="calories-lost" class="page">
+
+    <div class="card">
+        <h3>打了几场mai</h3>
+        <input id="caloriesInput" type="number" placeholder="次数">
+        <button class="action" onclick="saveGamesPlayed()">记录</button>
+    </div>
+
+
+    <div class="card">
+        <h3>算法</h3>
+        <h4>一首13-14+大概消耗的卡路里：20-25 kcal</h4>
+        <h4>一场solo mai大概消耗的卡路里：60-75 kcal</h4>
+        <h4>一场双人mai大概消耗的卡路里：80-100 kcal</h4>
+    </div>
+    <!-- <div class="card">
+        <h3>Quick Add</h3>
+    </div> -->
 
 </div>
 
@@ -230,6 +255,7 @@
 <div class="nav">
     <button onclick="show('home')" class="active">Home</button>
     <button onclick="show('meals')">Meals</button>
+    <button onclick="show('calories-lost')">Calories Lost</button>
     <button onclick="show('stats')">Stats</button>
 </div>
 
@@ -241,7 +267,7 @@ const today = new Date().toISOString().split("T")[0];
 document.getElementById("date").textContent = today;
 
 let data = {};
-let day = { weight:null, breakfast:[], lunch:[], dinner:[], snack:[] };
+let day = { weight:null, breakfast:[], lunch:[], dinner:[], snack:[], activity:[] };
 
 let activeMeal = "breakfast";
 
@@ -252,7 +278,7 @@ function load(){
     if(s) data = JSON.parse(s);
 
     if(!data[today]){
-        data[today] = { weight:null, breakfast:[], lunch:[], dinner:[], snack:[] };
+        data[today] = { weight:null, breakfast:[], lunch:[], dinner:[], snack:[], activity:[] };
     }
 
     day = data[today];
@@ -273,6 +299,16 @@ function saveWeight(){
     save();
     render();
 }
+
+function saveGamesPlayed(){
+    const games = parseFloat(document.getElementById("caloriesInput").value);
+    if(!games) return;
+    day["activity"][0] ={activity:"mai", count:games, calories:games*70};
+    // day["activity"].push({activity:"mai", count:games, calories:games*70}); // assuming average 70 kcal per game
+    save();
+    render();
+}
+saveGamesPlayed
 
 /* ---------- QUICK ---------- */
 
@@ -347,7 +383,10 @@ function renderSummary(){
         day[m].forEach(x => total += x.calories);
     }
 
-    document.getElementById("total").textContent = total;
+    document.getElementById("intake-total").textContent = total;
+    document.getElementById("activity-total").textContent = day.activity.length > 0 ? day.activity[0].calories : 0;
+    document.getElementById("net-total").textContent = total - (day.activity.length > 0 ? day.activity[0].calories : 0);
+
 }
 
 function renderMeal(){
