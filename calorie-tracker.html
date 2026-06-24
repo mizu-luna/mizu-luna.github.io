@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -152,6 +154,63 @@
         color: white;
         border: none;
     }
+
+    .goal-container {
+        width: 100%;
+        height: 14px;
+        background: #e5e5ea;
+        border-radius: 999px;
+        overflow: hidden;
+        margin-top: 12px;
+    }
+
+    .goal-fill {
+        height: 100%;
+        width: 0%;
+        background: #34c759;
+        transition: width 0.3s ease;
+    }
+
+    #goalText {
+        margin-top: 8px;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .date-nav {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .date-nav button {
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 10px;
+        background: #007aff;
+        color: white;
+        font-size: 16px;
+    }
+
+    .date-nav input {
+        flex: 1;
+        margin: 0;
+    }
+
+    .today-btn {
+        border: none;
+        border-radius: 10px;
+        background: #f2f2f7;
+        padding: 8px 12px;
+        margin-bottom: 10px;
+    }
+
+    .date-label {
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
 </style>
 </head>
 
@@ -160,11 +219,31 @@
 <div class="topbar">卡路里追踪器</div>
 
 <div class="summary">
-    日期: <span id="date"></span><br>
-    热量摄入: <span id="intake-total">0</span> kcal<br>
-    热量消耗: <span id="activity-total">0</span> kcal<br>
-    净热量: <span id="net-total">0</span> kcal<br>
-    体重: <span id="weightDisplay">-</span>
+
+    <div class="date-nav">
+        <button onclick="changeDate(-1)">◀</button>
+
+        <input
+            type="date"
+            id="datePicker"
+            onchange="jumpToDate()"
+        >
+
+        <button onclick="changeDate(1)">▶</button>
+    </div>
+
+    <button class="today-btn" onclick="goToToday()">
+        Today
+    </button>
+
+    <div class="date-label">
+        <span id="date"></span>
+    </div>
+
+    <!-- <hr>
+
+    Goal:
+    <span id="goalDisplay">1800</span> kcal -->
 </div>
 
 <!-- HOME -->
@@ -179,6 +258,16 @@
 
     <div class="card">
         <h3>总结</h3>
+        热量摄入: <span id="intake-total">0</span> kcal<br>
+        热量消耗: <span id="activity-total">0</span> kcal<br>
+        净热量: <span id="net-total">0</span> kcal<br>
+        <div class="goal-container">
+            <div class="goal-fill" id="goalFill"></div>
+        </div>
+        <div id="goalText">
+            剩 1800 kcal 
+        </div>
+        体重: <span id="weightDisplaySummary">-</span>
 
         <!-- <div class="quick">
             <button onclick="quick('breakfast','Banana',105)">Banana</button>
@@ -208,6 +297,27 @@
         <input id="cal" type="number" placeholder="卡路里">
 
         <button class="action" onclick="add()">记录</button>
+
+        <button class="action" onclick="openCamera()" disabled>
+            <!-- 📷 -->🚧
+        </button>
+        <input
+            id="foodPhoto"
+            type="file"
+            accept="image/*"
+            capture="environment"
+            style="display:none"
+            onchange="photoSelected(event)"
+        >
+        <img
+            id="photoPreview"
+            style="
+                display:none;
+                width:100%;
+                border-radius:12px;
+                margin-top:10px;
+            "
+        >
 
         <div class="quick">
             <button onclick="quick_from_meal('Banana',105)">香蕉</button>
@@ -247,7 +357,10 @@
 <div id="stats" class="page">
     <div class="card">
         <h3>体重趋势</h3>
-        <canvas id="chart"></canvas>
+        <!-- <canvas id="chart"></canvas> -->
+        <h4>Under Construction 🚧</h4>
+        <h4> 被修理中 🚧</h4>
+         <!-- <div id="myPlot" style="width:100%;"></div> -->
     </div>
 </div>
 
@@ -260,34 +373,56 @@
 </div>
 
 <script>
-
+const DEFAULT_GOAL = 1800;
 const KEY = "tracker";
-const today = new Date().toISOString().split("T")[0];
 
-document.getElementById("date").textContent = today;
+function getTodayString() {
+    return new Date().toISOString().split("T")[0];
+}
+
+function emptyDay() {
+    return {
+        weight: null,
+
+        breakfast: [],
+        lunch: [],
+        dinner: [],
+        snack: [],
+
+        activity: []
+    };
+}
+
+let selectedDate = getTodayString();
+
+document.getElementById("date").textContent = selectedDate;
 
 let data = {};
-let day = { weight:null, breakfast:[], lunch:[], dinner:[], snack:[], activity:[] };
+let day = emptyDay();
 
 let activeMeal = "breakfast";
 
 /* ---------- LOAD ---------- */
 
 function load(){
-    const s = localStorage.getItem(KEY);
-    if(s) data = JSON.parse(s);
 
-    if(!data[today]){
-        data[today] = { weight:null, breakfast:[], lunch:[], dinner:[], snack:[], activity:[] };
+    const s = localStorage.getItem(KEY);
+
+    if(s){
+        data = JSON.parse(s);
     }
 
-    day = data[today];
-    render();
+    loadDate(selectedDate);
 }
 
 function save(){
-    data[today] = day;
-    localStorage.setItem(KEY, JSON.stringify(data));
+
+    data[selectedDate] = day;
+
+    localStorage.setItem(
+        KEY,
+        JSON.stringify(data)
+    );
 }
 
 /* ---------- WEIGHT ---------- */
@@ -301,14 +436,16 @@ function saveWeight(){
 }
 
 function saveGamesPlayed(){
+    field = document.getElementById("caloriesInput");
+    if(!field || field.value === "") return;
     const games = parseFloat(document.getElementById("caloriesInput").value);
-    if(!games) return;
     day["activity"][0] ={activity:"mai", count:games, calories:games*70};
     // day["activity"].push({activity:"mai", count:games, calories:games*70}); // assuming average 70 kcal per game
     save();
+    field.value = "";
     render();
+    
 }
-saveGamesPlayed
 
 /* ---------- QUICK ---------- */
 
@@ -322,8 +459,7 @@ function quick_from_meal(food, cal){
     day[activeMeal].push({food:food, calories:cal});
 
     save();
-    renderMeal();
-    renderSummary();
+    render();
 }
 
 /* ---------- MEAL TABS ---------- */
@@ -353,8 +489,31 @@ function add(){
     document.getElementById("cal").value = "";
 
     save();
-    renderMeal();
-    renderSummary();
+    render();
+}
+
+function openCamera() {
+    document.getElementById("foodPhoto").click();
+}
+
+function photoSelected(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        const preview =
+            document.getElementById("photoPreview");
+
+        preview.src = e.target.result;
+        preview.style.display = "block";
+    };
+
+    reader.readAsDataURL(file);
 }
 
 /* ---------- DELETE ---------- */
@@ -362,11 +521,11 @@ function add(){
 function deleteEntry(meal, index){
     day[meal].splice(index, 1);
     save();
-    renderMeal();
-    renderSummary();
+    render();
 }
 
 /* ---------- RENDER ---------- */
+
 
 function render(){
     renderMeal();
@@ -378,14 +537,34 @@ function renderSummary(){
     document.getElementById("weightDisplay").textContent =
         day.weight ? day.weight + " kg" : "-";
 
+    document.getElementById("weightDisplaySummary").textContent =
+        day.weight ? day.weight + " kg" : "-";
+
     let total = 0;
     for(let m of ["breakfast","lunch","dinner","snack"]){
         day[m].forEach(x => total += x.calories);
     }
 
+    const goal = DEFAULT_GOAL;
+    const net = total - (day.activity && day.activity.length > 0 ? day.activity[0].calories : 0);
+
     document.getElementById("intake-total").textContent = total;
-    document.getElementById("activity-total").textContent = day.activity.length > 0 ? day.activity[0].calories : 0;
-    document.getElementById("net-total").textContent = total - (day.activity.length > 0 ? day.activity[0].calories : 0);
+    document.getElementById("activity-total").textContent = day.activity && day.activity.length > 0 ? day.activity[0].calories : 0;
+    document.getElementById("net-total").textContent = net;
+
+    const percent = Math.min(100, Math.max(0, (net / goal) * 100));
+    document.getElementById("goalFill").style.width = `${percent}%`;
+    if (net < goal && net < goal/2) {
+        document.getElementById("goalFill").style.background = "#ff3b30"; // red if not over goal
+        document.getElementById("goalText").textContent = `剩 ${goal - net} kcal`;
+    } else if (net < goal) {
+        document.getElementById("goalFill").style.background = "#ff9500"; // red if not over goal
+        document.getElementById("goalText").textContent = `剩 ${goal - net} kcal`;
+    }
+    else {
+        document.getElementById("goalFill").style.background = "#34c759"; // green if over goal
+        document.getElementById("goalText").textContent ="Goal reached ✓";
+    }
 
 }
 
@@ -459,9 +638,113 @@ function draw(){
     ctx.stroke();
 }
 
+function formatDateDisplay(dateString){
+
+    const date = new Date(dateString);
+
+    return date.toLocaleDateString(
+        undefined,
+        {
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+        }
+    );
+}
+
+function updateDateUI(){
+
+    document.getElementById("date").textContent =
+        formatDateDisplay(selectedDate);
+
+    document.getElementById("datePicker").value =
+        selectedDate;
+}
+
+function changeDate(days){
+
+    const d = new Date(selectedDate);
+
+    d.setDate(d.getDate() + days);
+
+    selectedDate =
+        d.toISOString().split("T")[0];
+
+    loadDate(selectedDate);
+}
+
+function jumpToDate(){
+
+    selectedDate =
+        document.getElementById("datePicker").value;
+
+    loadDate(selectedDate);
+}
+
+function goToToday(){
+
+    selectedDate = getTodayString();
+
+    loadDate(selectedDate);
+}
+
+function loadDate(dateString){
+
+    if(!data[dateString]){
+        data[dateString] = emptyDay();
+    }
+
+    day = data[dateString];
+
+    updateDateUI();
+    render();
+}
+
 load();
 
 </script>
+
+<!-- <script>
+    rawData = localStorage.getItem("tracker");
+    if(rawData){
+        rawData = JSON.parse(rawData);
+    }
+    xArray = [];
+    yArray = [];
+    for (var i = 0; i < Object.keys(rawData).length; i++) {
+        xArray.push(Object.keys(rawData)[i]);
+        yArray.push(rawData[Object.keys(rawData)[i]].weight);
+    }
+    console.log("xArray:", xArray);
+    console.log("yArray:", yArray);
+    var trace1 = {
+    x: xArray,
+    y: yArray,
+    type: 'scatter',
+    mode: 'lines+markers',
+    name: 'Weight',
+    line: { color: 'blue' }
+    };
+
+    var graphData = [trace1];
+
+    // Define Layout
+    var layout = {
+        title: 'Weight Gain Progress',
+        xaxis: {
+            title: '日期',
+            type: 'date', // Force x-axis to recognize dates
+            tickformat: '%b %d, %Y' // D3-time-format (e.g., Jan 01, 2026)
+        },
+        yaxis: {
+            title: '体重 (kg)'
+        },
+        autosize: true,
+    };
+
+    // Display using Plotly
+    Plotly.newPlot("myPlot", graphData, layout, {responsive: true});
+</script> -->
 
 </body>
 </html>
